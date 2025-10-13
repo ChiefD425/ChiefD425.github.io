@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- SEO/OG head from v2 -->
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Speaking — Fred Deichler</title>
+  <meta name="description" content="Talks, abstracts, and organizer resources." />
+  <meta property="og:title" content="Speaking — Fred Deichler" />
+  <meta property="og:description" content="Talks, abstracts, and organizer resources." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="index.html">Fred Deichler</a>
+  <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleNav()">☰</button>
+  <nav id="site-nav" class="site-nav">
+    <a href="resume.html">Résumé</a>
+    <a href="speaking.html" aria-current="page">Speaking</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="main" class="container">
+  <h1>Speaking</h1>
+
+  <section class="card">
+    <h2>Talks</h2>
+    <ul id="talk-list" class="talks"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Organizer Kit</h2>
+    <p>Everything you need to promote and run the session.</p>
+    <ul class="tight">
+      <li><a href="#">Speaker Bio (short/long)</a></li>
+      <li><a href="#">Headshots</a></li>
+      <li><a href="#">Session Abstracts</a></li>
+      <li><a href="#">Intro/Outro Script</a></li>
+      <li><a href="#">ZIP: Full Kit</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <small>© <span id="year"></span> Fred Deichler</small>
+</footer>
+<script src="script.js"></script>
+<script>
+(async function(){
+  try{
+    const res = await fetch('talks.json');
+    const talks = await res.json();
+    const list = document.getElementById('talk-list');
+    talks
+      .sort((a,b)=> (b.year+a.event).localeCompare(a.year+b.event))
+      .forEach(t=>{
+        const li=document.createElement('li');
+        li.innerHTML = `<strong>${t.event} ${t.year}</strong> — ${t.title}${t.link ? ' — <a href="'+t.link+'">Slides/Video</a>':''}`;
+        list.appendChild(li);
+      });
+  }catch(e){
+    document.getElementById('talk-list').innerHTML = '<li>Talks loading…</li>';
+  }
+})();
+</script>
+</body>
+</html>
