@@ -1,0 +1,24 @@
+[
+  {
+    "quote": "Very informative and relevant to what I am doing at work currently.",
+    "author": "Attendee",
+    "event": "Agile+DevOps Days Des Moines 2025",
+    "talkId": "2025-agile-devops-des-moines-chatgpt",
+    "featured": true
+  },
+  {
+    "quote": "Appreciate the talk. Gave me a different perspective as I think about my own uses of AI.",
+    "author": "Nate Hicks",
+    "event": "Agile+DevOps Days Des Moines 2025",
+    "talkId": "2025-agile-devops-des-moines-chatgpt",
+    "featured": true
+  },
+  {
+    "quote": "Really helpful to explore multiple tools, and how to best prompt the tools to get better results!",
+    "author": "Allison Hanrahan",
+    "event": "Agile+DevOps Days Des Moines 2025",
+    "talkId": "2025-agile-devops-des-moines-chatgpt",
+    "featured": true
+  }
+]
+

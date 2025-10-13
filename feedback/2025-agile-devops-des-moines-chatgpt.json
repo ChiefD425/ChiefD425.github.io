@@ -1,0 +1,18 @@
+{
+  "valuablePct": 100,
+  "hearAgainPct": 98,
+  "responses": 55,
+  "metrics": {
+    "relevant": 94.4,
+    "actionable": 92.7,
+    "engaging": 89.6,
+    "inspiring": 89.6
+  },
+  "testimonials": [
+    { "text": "Light and enjoyable. But still relevant. Was a good presentation. Had a good mix of joking along with info", "author": "Payton Quinn" },
+    { "text": "Really helpful to explore multiple tools, and how to best prompt the tools to get better results!", "author": "Allison Hanrahan" },
+    { "text": "This session really helped me reflect on all the ways I could be using AI that I'm not.", "author": "JoAnna Springsteen" },
+    { "text": "Very very informative...and relevant to what I am doing at work currently.", "author": "Attendee" }
+  ]
+}
+

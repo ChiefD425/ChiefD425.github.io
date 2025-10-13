@@ -42,10 +42,11 @@ GitHub Pages will automatically rebuild and deploy your site within a few minute
 
 ### Speaking Engagements (`talks.json`)
 
-Add new talks in this format:
+Add new talks in this format (note the required `talkId` used to link feedback files):
 
 ```json
 {
+  "talkId": "2025-agile-devops-des-moines-chatgpt",
   "event": "Conference Name",
   "year": "2025",
   "title": "Talk Title",
@@ -55,6 +56,12 @@ Add new talks in this format:
 ```
 
 **Note**: The `date` field is used for chronological sorting but is not displayed on the page.
+
+#### Feedback data (optional)
+
+- Create `feedback/index.json` with badge summaries keyed by `talkId`.
+- Create one file per talk: `feedback/{talkId}.json` containing metrics and testimonials.
+- Add curated quotes to `testimonials.json` for homepage display.
 
 ### Media (`media.html`)
 
