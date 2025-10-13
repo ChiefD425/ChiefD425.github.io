@@ -25,12 +25,20 @@
   <h1>Speaking</h1>
   <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: var(--space-xl);">Conference talks, workshops, and presentations on Agile delivery, AI in teams, and coaching practices.</p>
 
-  <section class="card fade-in">
-    <h2>Conference Talks & Presentations</h2>
-    <ul id="talk-list" class="talks"></ul>
+  <!-- Upcoming Talks Section -->
+  <section class="upcoming-section">
+    <h2 class="gradient-heading">Upcoming Talks</h2>
+    <div id="upcoming-talks"></div>
   </section>
 
-  <section class="card fade-in" style="background: var(--gradient-subtle); border-left: 4px solid var(--orange);">
+  <!-- Past Talks Timeline -->
+  <section class="past-talks-section">
+    <h2 style="text-align: center; margin-bottom: var(--space-xl);">Past Talks & Presentations</h2>
+    <div class="timeline-container" id="past-talks"></div>
+  </section>
+
+  <!-- Organizer Kit -->
+  <section class="card fade-in" style="background: var(--gradient-subtle); border-left: 4px solid var(--orange); margin-top: var(--space-2xl);">
     <h2>📋 Organizer Kit</h2>
     <p>Everything you need to promote and run the session successfully.</p>
     <ul class="tight">
@@ -47,23 +55,5 @@
   <small>© <span id="year"></span> Fred Deichler</small>
 </footer>
 <script src="script.js"></script>
-<script>
-(async function(){
-  try{
-    const res = await fetch('talks.json');
-    const talks = await res.json();
-    const list = document.getElementById('talk-list');
-    talks
-      .sort((a,b)=> b.date.localeCompare(a.date))
-      .forEach(t=>{
-        const li=document.createElement('li');
-        li.innerHTML = `<strong>${t.event} ${t.year}</strong> — ${t.title}${t.link ? ' — <a href="'+t.link+'">Slides/Video</a>':''}`;
-        list.appendChild(li);
-      });
-  }catch(e){
-    document.getElementById('talk-list').innerHTML = '<li>Talks loading…</li>';
-  }
-})();
-</script>
 </body>
 </html>
