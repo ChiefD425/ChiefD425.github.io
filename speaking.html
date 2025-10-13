@@ -54,7 +54,7 @@
     const talks = await res.json();
     const list = document.getElementById('talk-list');
     talks
-      .sort((a,b)=> (b.year+a.event).localeCompare(a.year+b.event))
+      .sort((a,b)=> b.date.localeCompare(a.date))
       .forEach(t=>{
         const li=document.createElement('li');
         li.innerHTML = `<strong>${t.event} ${t.year}</strong> — ${t.title}${t.link ? ' — <a href="'+t.link+'">Slides/Video</a>':''}`;
