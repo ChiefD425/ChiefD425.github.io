@@ -331,13 +331,8 @@ a : hover {
     display : grid;
     gap : var(-- space - lg);
     margin - top : var(-- space - xl);
-}.grid.two {
-    grid - template - columns : repeat(auto - fit, minmax(300 px, 1 fr));
-}.grid.three {
-    grid - template - columns : repeat(auto - fit, minmax(280 px, 1 fr));
 }
 
-/* ----- Layout spacing improvements ----- */
 /* Add generous vertical rhythm between major sections */.container > section {
     margin - top : var(-- space - 2 xl);
 }.container > section : first - of - type {
@@ -348,6 +343,10 @@ a : hover {
 @media(min - width : 900 px) {.grid {
         gap : var(-- space - 2 xl);
     }
+}.grid.two {
+    grid - template - columns : repeat(auto - fit, minmax(300 px, 1 fr));
+}.grid.three {
+    grid - template - columns : repeat(auto - fit, minmax(280 px, 1 fr));
 }
 
 /* ===== Cards ===== */.card {
