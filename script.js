@@ -113,6 +113,15 @@ function getInitials(name) {
     return name.split(' ').filter(word => word.length > 0).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
 
+// Generate talk image (uses real image if available, otherwise initials)
+function getTalkImage(talk, index) {
+    if (talk.image && talk.image.trim() !== '') {
+        return `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`;
+    }
+    // Fallback to gradient + initials
+    return `<div style="background: ${getTalkGradient(index)}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">${getInitials(talk.event)}</div>`;
+}
+
 // Store talks globally for filtering
 let allTalks = [];
 let currentFilter = 'all';
@@ -144,12 +153,16 @@ async function loadTalks() {
                     upcoming.forEach((talk, index) => {
                         const card = document.createElement('div');
                         card.className = 'upcoming-card fade-in';
+                        
+                        // Generate image content
+                        const imageContent = talk.image && talk.image.trim() !== '' 
+                            ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                            : getInitials(talk.event);
+                        
                         card.innerHTML = `
             <span class="upcoming-badge">🎤 UPCOMING</span>
             <div class="upcoming-content">
-              <div class="upcoming-image">${
-                            getInitials(talk.event)
-                        }</div>
+              <div class="upcoming-image">${imageContent}</div>
               <div class="upcoming-details">
                 <h3>${
                             talk.event
@@ -207,13 +220,16 @@ async function loadTalks() {
                     } fade-in`;
                     item.dataset.talkId = talk.talkId || '';
 
+                    // Generate image content with fallback to initials
+                    const imageContent = talk.image && talk.image.trim() !== '' 
+                        ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                        : getInitials(talk.event);
+                    
                     const imageDiv = `
           <div class="talk-image" style="background: ${
-                        getTalkGradient(index)
+                        talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(index)
                     }">
-            ${
-                        getInitials(talk.event)
-                    }
+            ${imageContent}
           </div>
         `;
 
@@ -316,9 +332,16 @@ async function loadTalks() {
             item.className = `talk-item ${isLeft ? 'left' : 'right'} fade-in`;
             item.dataset.talkId = talk.talkId || '';
             
+            // Generate image content with fallback to initials
+            const imageContent = talk.image && talk.image.trim() !== '' 
+                ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                : getInitials(talk.event);
+            
             const imageDiv = `
-        <div class="talk-image" style="background: ${getTalkGradient(index)}">
-          ${getInitials(talk.event)}
+        <div class="talk-image" style="background: ${
+                talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(index)
+            }">
+          ${imageContent}
         </div>
       `;
             
@@ -564,13 +587,16 @@ async function loadTalks() {
                     month: 'long',
                     year: 'numeric'
                 });
+                // Generate modal thumbnail
+                const thumbContent = talk.image && talk.image.trim() !== '' 
+                    ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                    : getInitials(talk.event);
+                
                 const header = `
     <div class="modal-header">
       <div class="thumb" style="background:${
-                    getTalkGradient(1)
-                }">${
-                    getInitials(talk.event)
-                }</div>
+                    talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(1)
+                }">${thumbContent}</div>
       <div>
         <h2 style="margin:0">${
                     talk.title

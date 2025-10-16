@@ -35,41 +35,47 @@ GitHub Pages will automatically rebuild and deploy your site within a few minute
 
 ## 📝 Updating Content
 
-### Resume (`resume.html`)
+### 📚 Documentation
 
-- Edit the experience, education, and certifications sections directly in the HTML
-- Maintain the card-based structure for consistency
+- **[QUICK_START.md](QUICK_START.md)** - Get started in 5 minutes
+- **[REFERENCE.md](REFERENCE.md)** - Complete reference guide
 
-### Speaking Engagements (`talks.json`)
+### Quick Reference
 
-Add new talks in this format (note the required `talkId` used to link feedback files):
+#### Adding a Talk
 
+Add to `talks.json`:
 ```json
 {
-  "talkId": "2025-agile-devops-des-moines-chatgpt",
+  "talkId": "2025-conference-name-topic",
   "event": "Conference Name",
   "year": "2025",
   "title": "Talk Title",
-  "link": "https://optional-link-to-slides-or-video",
-  "date": "2025-MM-DD"
+  "date": "2025-12-15",
+  "category": "AI",
+  "image": "media/conferences/2025-conference-name-topic/logo.jpg"
 }
 ```
 
-**Note**: The `date` field is used for chronological sorting but is not displayed on the page.
+#### Adding Images
 
-#### Feedback data (optional)
+1. Create folder: `media/conferences/[talkId]/`
+2. Add images: `logo.jpg`, `action.jpg`, etc.
+3. Update `image` field in talks.json
 
-- Create `feedback/index.json` with badge summaries keyed by `talkId`.
-- Create one file per talk: `feedback/{talkId}.json` containing metrics and testimonials.
-- Add curated quotes to `testimonials.json` for homepage display.
+#### Adding Feedback
 
-### Media (`media.html`)
+1. Copy `feedback/TEMPLATE.json` to `feedback/[talkId].json`
+2. Fill in metrics and testimonials
+3. Update `feedback/index.json`
 
-Add new podcast or video appearances by editing the lists in `media.html`.
+#### Other Pages
 
-### Contact Information (`contact.html`)
+- **Resume** - Edit `resume.html` directly
+- **Media** - Edit `media.html` directly
+- **Contact** - Edit `contact.html` directly
 
-Update email, phone, LinkedIn, or Linktree links as needed.
+**See [QUICK_START.md](QUICK_START.md) for detailed instructions.**
 
 ## 🎨 Design
 
@@ -89,15 +95,26 @@ Update email, phone, LinkedIn, or Linktree links as needed.
 
 ```text
 .
-├── index.html          # Homepage with intro and navigation
-├── resume.html         # Work experience, education, certifications
-├── speaking.html       # Conference talks and presentations
-├── media.html          # Podcasts, videos, and media appearances
-├── contact.html        # Contact information
-├── style.css           # All styles with dark mode support
-├── script.js           # Navigation toggle and year display
-├── talks.json          # Speaking data (loaded dynamically)
-└── README.md           # This file
+├── index.html              # Homepage with intro and navigation
+├── resume.html             # Work experience, education, certifications
+├── speaking.html           # Conference talks and presentations
+├── media.html              # Podcasts, videos, and media appearances
+├── contact.html            # Contact information
+├── style.css               # All styles with dark mode support
+├── script.js               # Navigation and talk rendering
+├── talks.json              # Speaking data (supports images)
+├── testimonials.json       # Featured testimonials
+├── media/                  # All images and media assets
+│   ├── speakers/           # Professional headshots
+│   ├── conferences/        # Conference photos (by talkId)
+│   └── talks/              # Talk-specific content
+├── feedback/               # Talk feedback data
+│   ├── index.json          # Summary metrics
+│   ├── [talkId].json       # Individual talk feedback
+│   └── TEMPLATE.json       # Template for new talks
+├── QUICK_START.md          # Quick start guide
+├── REFERENCE.md            # Complete reference
+└── README.md               # This file
 ```
 
 ## 🔧 Customization Tips
@@ -110,8 +127,10 @@ Update email, phone, LinkedIn, or Linktree links as needed.
 
 ### Add Images
 
-- Create an `assets/` or `images/` folder
-- Reference images with relative paths: `<img src="assets/photo.jpg">`
+- Use the `media/` folder for all images
+- Conference images: `media/conferences/[talkId]/`
+- Headshots: `media/speakers/`
+- See [QUICK_START.md](QUICK_START.md) for details
 
 ### Extend Sections
 

@@ -1,0 +1,17 @@
+{
+  "valuablePct": 95,
+  "hearAgainPct": 90,
+  "responses": 42,
+  "metrics": {
+    "relevant": 94.4,
+    "actionable": 92.7,
+    "engaging": 89.6,
+    "inspiring": 89.6
+  },
+  "testimonials": [
+    {"text": "Amazing session! Very actionable."},
+    {"text": "Great insights and practical advice."},
+    {"text": "Loved the examples and real-world applications."}
+  ]
+}
+

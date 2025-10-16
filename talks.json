@@ -19,7 +19,7 @@
         "date": "2025-09-10",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout",
+        "format": "Keynote, Breakout"
     },
     {
         "talkId": "2025-agile-devops-des-moines-chatgpt",
@@ -31,7 +31,8 @@
         "category": "AI",
         "duration": "45-60 min",
         "format": "Keynote, Breakout",
-        "featured": true
+        "featured": true,
+        "image": ""
     },
     {
         "talkId": "2025-osms-scrummaster-impact",
@@ -53,7 +54,7 @@
         "category": "Leadership",
         "duration": "45 min",
         "format": "Breakout"
-    }, {
+    },     {
         "talkId": "2025-kcdc-predictable-delivery",
         "event": "Kansas City Developers Conference",
         "year": "2025",
@@ -63,8 +64,9 @@
         "category": "Technical",
         "duration": "45-60 min",
         "format": "Keynote, Workshop, Breakout",
-        "featured": true
-    }, {
+        "featured": true,
+        "image": ""
+    },     {
         "talkId": "2024-scanagile-growth-wheel",
         "event": "ScanAgile",
         "year": "2024",
@@ -74,7 +76,8 @@
         "category": "Leadership",
         "duration": "45 min",
         "format": "Breakout",
-        "featured": true
+        "featured": true,
+        "image": ""
     }, {
         "talkId": "2024-ali-predictable-delivery",
         "event": "Agile Lean Ireland",
