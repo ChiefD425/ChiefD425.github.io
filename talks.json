@@ -20,7 +20,6 @@
         "category": "AI",
         "duration": "45-60 min",
         "format": "Keynote, Breakout",
-        "featured": true
     },
     {
         "talkId": "2025-agile-devops-des-moines-chatgpt",
@@ -81,12 +80,11 @@
         "event": "Agile Lean Ireland",
         "year": "2024",
         "title": "Achieving Predictable Delivery",
-        "link": "https://www.youtube.com/watch?v=uP6FQOJBkwc",
+        "link": "",
         "date": "2024-10-02",
         "category": "Technical",
         "duration": "45-60 min",
-        "format": "Keynote, Workshop, Breakout",
-        "featured": true
+        "format": "Keynote, Workshop, Breakout"
     }, {
         "talkId": "2024-ai-agile-summit-masterless",
         "event": "AI & Agile Summit",
@@ -217,7 +215,6 @@
         "date": "2025-09-05",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout",
-        "featured": true
+        "format": "Keynote, Breakout"
     }
 ]
