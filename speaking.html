@@ -4,9 +4,16 @@
   <!-- SEO/OG head from v2 -->
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Speaking — Fred Deichler</title>
-  <meta name="description" content="Talks, abstracts, and organizer resources." />
+  <meta name="description" content="40+ international conference talks on predictable delivery, AI in Agile teams, and coaching practices. Available for keynotes, workshops, and breakout sessions." />
   <meta property="og:title" content="Speaking — Fred Deichler" />
-  <meta property="og:description" content="Talks, abstracts, and organizer resources." />
+  <meta property="og:description" content="40+ international conference talks on predictable delivery, AI in Agile teams, and coaching practices." />
+  <meta property="og:image" content="IMG_3523.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.freddeichler.com/speaking.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Speaking — Fred Deichler" />
+  <meta name="twitter:description" content="40+ international conference talks on predictable delivery, AI in Agile teams, and coaching practices." />
+  <meta name="twitter:image" content="IMG_3523.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,7 +23,9 @@
   <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleNav()">☰</button>
   <nav id="site-nav" class="site-nav">
     <a href="speaking.html" aria-current="page">Speaking</a>
-    <a href="media.html">Media</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Work With Me</a>
+    <a href="resources.html">Resources</a>
     <a href="contact.html">Contact</a>
   </nav>
 </header>
@@ -31,9 +40,26 @@
     <div id="upcoming-talks"></div>
   </section>
 
+  <!-- Featured Talks Section -->
+  <section class="featured-talks-section">
+    <h2 style="text-align: center; margin-bottom: var(--space-md);">Featured Talks</h2>
+    <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-xl);">Most requested sessions with proven impact</p>
+    <div id="featured-talks" class="grid two"></div>
+  </section>
+
   <!-- Past Talks Timeline -->
   <section class="past-talks-section">
-    <h2 style="text-align: center; margin-bottom: var(--space-xl);">Past Talks & Presentations</h2>
+    <h2 style="text-align: center; margin-bottom: var(--space-md);">Past Talks & Presentations</h2>
+    
+    <!-- Category Filters -->
+    <div class="filter-buttons" style="text-align: center; margin-bottom: var(--space-xl);">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="Technical">Technical</button>
+      <button class="filter-btn" data-category="Leadership">Leadership</button>
+      <button class="filter-btn" data-category="AI">AI</button>
+      <button class="filter-btn" data-category="Transformation">Transformation</button>
+    </div>
+    
     <div class="timeline-container" id="past-talks"></div>
   </section>
 

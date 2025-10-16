@@ -584,6 +584,64 @@ ul.talks {
 
 /* ===== Speaking Page - Zigzag Timeline ===== */
 
+/* Featured Talks Section */
+.featured-talks-section {
+  margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 640px) {
+  .featured-talks-section .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+}
+
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border: 2px solid var(--orange);
+  background: transparent;
+  color: var(--orange);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.filter-btn:hover {
+  background: var(--orange);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: var(--gradient-hero);
+  color: white;
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+/* Category Badge on Talk Cards */
+.category-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--orange);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
 /* Gradient Heading */
 .gradient-heading {
   background: var(--gradient-hero);
@@ -904,23 +962,36 @@ ul.talks {
 }
 
 /* ===== Modal (Speaking details) ===== */
-.modal { position: fixed; inset: 0; z-index: 1000; }
+.modal { position: fixed; inset: 0; z-index: 1000; overflow-y: auto; }
 .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.45); backdrop-filter: blur(6px); }
 .modal-content {
   position: relative; margin: 5vh auto; max-width: 960px; width: calc(100% - 2rem);
   background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,.4); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl); padding: var(--space-xl);
+  max-height: 90vh; overflow-y: auto;
 }
 @media (prefers-color-scheme: dark){
   .modal-content{ background: rgba(20,24,31,.85); border:1px solid rgba(255,255,255,.12); }
 }
-.modal-close{ position:absolute; top:.75rem; right:.75rem; font-size:1.75rem; line-height:1; border:none; background:transparent; color:var(--text-secondary); cursor:pointer }
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 2vh auto;
+    width: calc(100% - 1rem);
+    padding: var(--space-lg);
+    max-height: 95vh;
+  }
+}
+.modal-close{ position:absolute; top:.75rem; right:.75rem; font-size:1.75rem; line-height:1; border:none; background:transparent; color:var(--text-secondary); cursor:pointer; z-index: 10; }
 .modal-close:hover{ color: var(--orange) }
 
 /* Modal inner layout */
-.modal-header{ display:flex; align-items:center; gap: var(--space-lg); margin-bottom: var(--space-lg) }
-.modal-header .thumb{ width:96px; height:96px; border-radius: var(--radius-md); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1.5rem; box-shadow: var(--shadow-md) }
+.modal-header{ display:flex; align-items:center; gap: var(--space-lg); margin-bottom: var(--space-lg); flex-wrap: wrap; }
+.modal-header .thumb{ width:96px; height:96px; border-radius: var(--radius-md); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1.5rem; box-shadow: var(--shadow-md); flex-shrink: 0; }
+@media (max-width: 640px) {
+  .modal-header { gap: var(--space-md); }
+  .modal-header .thumb { width: 72px; height: 72px; font-size: 1.25rem; }
+}
 .modal-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg) }
 @media (max-width: 800px){ .modal-grid{ grid-template-columns:1fr } }
 .metric{ margin-bottom: .5rem }
@@ -1003,5 +1074,13 @@ ul.talks {
   .btn {
     width: 100%;
     justify-content: center;
+  }
+  
+  h1 {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
   }
 }

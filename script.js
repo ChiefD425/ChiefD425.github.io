@@ -6,6 +6,61 @@ function toggleNav() {
 // Update copyright year
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Google Analytics - Replace YOUR_MEASUREMENT_ID with your actual GA4 measurement ID
+(function() {
+    const gaId = 'G-XXXXXXXXXX'; // TODO: Replace with actual GA4 measurement ID
+    
+    // Load GA4 script
+    const script1 = document.createElement('script');
+    script1.async = true;
+    script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+    document.head.appendChild(script1);
+    
+    // Initialize GA4
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', gaId);
+})();
+
+// Analytics event tracking
+function trackEvent(category, action, label) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', action, {
+            'event_category': category,
+            'event_label': label
+        });
+    }
+}
+
+// Add structured data for Person/Organization
+function addStructuredData() {
+    const personSchema = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Fred Deichler",
+        "jobTitle": "Agile Coach",
+        "description": "International Agile Coach and Speaker with 13+ years experience coaching 50+ teams",
+        "url": "https://www.freddeichler.com",
+        "image": "https://www.freddeichler.com/IMG_3523.png",
+        "sameAs": [
+            "https://www.linkedin.com/in/freddeichler/",
+            "https://linktr.ee/freddeichler"
+        ],
+        "knowsAbout": ["Agile Coaching", "Scrum", "Kanban", "Evidence-Based Management", "Flow Metrics", "AI in Teams"],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "University of Minnesota, Crookston"
+        }
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(personSchema);
+    document.head.appendChild(script);
+}
+
 // Navbar scroll effect
 let lastScroll = 0;
 const header = document.querySelector('.site-header');
@@ -58,22 +113,28 @@ function getInitials(name) {
     return name.split(' ').filter(word => word.length > 0).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
 
+// Store talks globally for filtering
+let allTalks = [];
+let currentFilter = 'all';
+
 // Load and display talks
 async function loadTalks() {
     const upcomingContainer = document.getElementById('upcoming-talks');
     const pastContainer = document.getElementById('past-talks');
+    const featuredContainer = document.getElementById('featured-talks');
 
     if (! upcomingContainer && ! pastContainer) 
         return; // Not on speaking page
 
         try {
             const response = await fetch('talks.json');
-            const talks = await response.json();
+            allTalks = await response.json();
             const today = new Date().toISOString().split('T')[0];
 
-            // Separate upcoming and past talks
-            const upcoming = talks.filter(t => t.date >= today).sort((a, b) => a.date.localeCompare(b.date));
-            const past = talks.filter(t => t.date<today).sort((a, b) => b.date.localeCompare(a.date));
+            // Separate upcoming, featured, and past talks
+            const upcoming = allTalks.filter(t => t.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+            const featured = allTalks.filter(t => t.featured === true);
+            const past = allTalks.filter(t => t.date<today).sort((a, b) => b.date.localeCompare(a.date));
 
             // Render upcoming talks
             if (upcomingContainer) {
@@ -112,6 +173,26 @@ async function loadTalks() {
                 }
             }
 
+            // Render featured talks
+            if (featuredContainer) {
+                featured.forEach((talk, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card fade-in';
+                    card.style.cursor = 'pointer';
+                    card.innerHTML = `
+            <span class="category-badge">${talk.category || 'General'}</span>
+            <h3 style="margin-top: var(--space-xs); margin-bottom: var(--space-sm);">${talk.title}</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--space-xs);">
+              <strong>Duration:</strong> ${talk.duration || '45-60 min'}<br>
+              <strong>Format:</strong> ${talk.format || 'Keynote, Workshop, Breakout'}
+            </p>
+            ${talk.link ? `<a href="${talk.link}" class="talk-link" onclick="event.stopPropagation()">View Recording →</a>` : ''}
+          `;
+                    card.addEventListener('click', () => openTalkModal(talk));
+                    featuredContainer.appendChild(card);
+                });
+            }
+
             // Render past talks with zigzag timeline
             if (pastContainer) { // Add timeline line
                 const timelineLine = document.createElement('div');
@@ -138,6 +219,9 @@ async function loadTalks() {
 
                     const contentDiv = `
           <div class="talk-content">
+            <span class="category-badge">${
+                        talk.category || 'General'
+                    }</span>
             <h3>${
                         talk.event
                     }</h3>
@@ -162,6 +246,9 @@ async function loadTalks() {
                 });
             }
 
+            // Setup filter buttons
+            setupFilters();
+
             // Re-observe fade-in elements
             document.querySelectorAll('.fade-in').forEach((el, index) => {
                 if (!el.style.opacity) {
@@ -182,6 +269,113 @@ async function loadTalks() {
                 upcomingContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Unable to load talks. Please try again later.</p>';
             }
         }
+    }
+
+    // Setup category filters
+    function setupFilters() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Get category
+                const category = btn.dataset.category;
+                currentFilter = category;
+                
+                // Filter talks
+                filterTalks(category);
+            });
+        });
+    }
+
+    // Filter talks by category
+    function filterTalks(category) {
+        const pastContainer = document.getElementById('past-talks');
+        if (!pastContainer) return;
+        
+        const today = new Date().toISOString().split('T')[0];
+        let filteredTalks = allTalks.filter(t => t.date < today).sort((a, b) => b.date.localeCompare(a.date));
+        
+        if (category !== 'all') {
+            filteredTalks = filteredTalks.filter(t => t.category === category);
+        }
+        
+        // Clear and re-render
+        pastContainer.innerHTML = '';
+        
+        // Add timeline line
+        const timelineLine = document.createElement('div');
+        timelineLine.className = 'timeline-line';
+        pastContainer.appendChild(timelineLine);
+        
+        filteredTalks.forEach((talk, index) => {
+            const isLeft = index % 2 === 0;
+            const item = document.createElement('div');
+            item.className = `talk-item ${isLeft ? 'left' : 'right'} fade-in`;
+            item.dataset.talkId = talk.talkId || '';
+            
+            const imageDiv = `
+        <div class="talk-image" style="background: ${getTalkGradient(index)}">
+          ${getInitials(talk.event)}
+        </div>
+      `;
+            
+            const contentDiv = `
+        <div class="talk-content">
+          <span class="category-badge">${talk.category || 'General'}</span>
+          <h3>${talk.event}</h3>
+          <h4>${talk.title}</h4>
+          <span class="talk-year">${talk.year}</span>
+          ${talk.link ? `<br><a href="${talk.link}" class="talk-link">View Recording →</a>` : ''}
+        </div>
+      `;
+            
+            item.innerHTML = imageDiv + contentDiv + '<div class="timeline-dot"></div>';
+            item.addEventListener('click', () => openTalkModal(talk));
+            pastContainer.appendChild(item);
+        });
+        
+        // Re-observe fade-in
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
+            observer.observe(el);
+        });
+    }
+
+    // Add structured data for events on speaking page
+    function addEventStructuredData() {
+        if (!document.getElementById('past-talks') && !document.getElementById('upcoming-talks')) return;
+        
+        fetch('talks.json').then(r => r.json()).then(talks => {
+            const events = talks.filter(t => t.date >= new Date().toISOString().split('T')[0]).map(talk => ({
+                "@context": "https://schema.org",
+                "@type": "Event",
+                "name": talk.title,
+                "description": `${talk.title} at ${talk.event} ${talk.year}`,
+                "startDate": talk.date,
+                "eventStatus": "https://schema.org/EventScheduled",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "organizer": {
+                    "@type": "Organization",
+                    "name": talk.event
+                },
+                "performer": {
+                    "@type": "Person",
+                    "name": "Fred Deichler"
+                }
+            }));
+            
+            if (events.length > 0) {
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.text = JSON.stringify(events);
+                document.head.appendChild(script);
+            }
+        }).catch(() => {});
     }
 
     // Observe all fade-in elements
@@ -205,6 +399,27 @@ async function loadTalks() {
         loadTalks();
         // Load homepage testimonials if present
         loadFeaturedTestimonials();
+        // Load recent highlights on homepage
+        loadRecentHighlights();
+        // Load services testimonials if present
+        loadServicesTestimonials();
+        
+        // Add structured data
+        addStructuredData();
+        addEventStructuredData();
+        
+        // Track conversion points
+        document.querySelectorAll('a[href="contact.html"]').forEach(link => {
+            link.addEventListener('click', () => trackEvent('Navigation', 'contact_click', 'Contact Page'));
+        });
+        
+        document.querySelectorAll('a[href="services.html"]').forEach(link => {
+            link.addEventListener('click', () => trackEvent('Navigation', 'services_click', 'Services Page'));
+        });
+        
+        document.querySelectorAll('.talk-link').forEach(link => {
+            link.addEventListener('click', () => trackEvent('Speaking', 'recording_click', link.textContent));
+        });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
@@ -250,12 +465,74 @@ async function loadTalks() {
             } catch (e) { /* ignore */
             }
         }
+
+        async function loadRecentHighlights() {
+            const grid = document.getElementById('recent-highlights-grid');
+            if (! grid) 
+                return;
+                try {
+                    const res = await fetch('talks.json');
+                    const talks = await res.json();
+                    const today = new Date().toISOString().split('T')[0];
+                    
+                    // Get 3 most recent talks (past or upcoming)
+                    const recentTalks = talks.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+                    
+                    grid.innerHTML = recentTalks.map(talk => {
+                        const isPast = talk.date < today;
+                        const dateFormatted = new Date(talk.date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            year: 'numeric'
+                        });
+                        return `
+        <div class="card" style="padding: var(--space-lg);">
+          <span class="badge">${isPast ? 'Recent' : 'Upcoming'}</span>
+          <h3 style="font-size: 1.125rem; margin-top: var(--space-sm);">${talk.event} ${talk.year}</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--space-xs);">${talk.title}</p>
+          <small style="color: var(--text-secondary);">${dateFormatted}</small>
+        </div>
+      `;
+                    }).join('');
+                } catch (e) { /* ignore */
+                }
+            }
+
+        async function loadServicesTestimonials() {
+            const grid = document.getElementById('services-testimonials');
+            if (! grid) 
+                return;
+                try {
+                    const res = await fetch('testimonials.json');
+                    const items = await res.json();
+                    grid.innerHTML = items.map(
+                        q => `
+      <div class="quote">
+        <p style="margin:0 0 .5rem 0">"${
+                            q.quote
+                        }"</p>
+        <small style="color:var(--text-secondary)">${
+                            q.author || 'Attendee'
+                        }${
+                            q.event ? ` — ${
+                                q.event
+                            }` : ''
+                        }</small>
+      </div>
+    `
+                    ).join('');
+                } catch (e) { /* ignore */
+                }
+            }
         // -------- Modal logic (lazy-load feedback) --------
         function openTalkModal(talk) {
             const modal = document.getElementById('talk-modal');
             const body = document.getElementById('modal-body');
             if (! modal || ! body) 
                 return;
+                
+                // Track modal open
+                trackEvent('Speaking', 'modal_open', talk.title);
+                
                 body.innerHTML = `<div style="text-align:center; padding:2rem;">Loading…</div>`;
                 modal.style.display = 'block';
                 modal.setAttribute('aria-hidden', 'false');
@@ -303,6 +580,11 @@ async function loadTalks() {
                 } • ${monthYear} • ${
                     fb.responses || 0
                 } responses</p>
+        ${talk.duration || talk.format ? `<p style="margin-top:0.5rem; color:var(--text-secondary); font-size:0.9rem;">
+          ${talk.duration ? `<strong>Duration:</strong> ${talk.duration}` : ''}
+          ${talk.duration && talk.format ? ' • ' : ''}
+          ${talk.format ? `<strong>Format:</strong> ${talk.format}` : ''}
+        </p>` : ''}
       </div>
     </div>`;
 
