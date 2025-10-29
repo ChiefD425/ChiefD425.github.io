@@ -116,7 +116,7 @@ function getInitials(name) {
 // Generate talk image (uses real image if available, otherwise initials)
 function getTalkImage(talk, index) {
     if (talk.image && talk.image.trim() !== '') {
-        return `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`;
+        return `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`;
     }
     // Fallback to gradient + initials
     return `<div style="background: ${getTalkGradient(index)}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">${getInitials(talk.event)}</div>`;
@@ -156,7 +156,7 @@ async function loadTalks() {
                         
                         // Generate image content
                         const imageContent = talk.image && talk.image.trim() !== '' 
-                            ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                            ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
                             : getInitials(talk.event);
                         
                         card.innerHTML = `
@@ -222,7 +222,7 @@ async function loadTalks() {
 
                     // Generate image content with fallback to initials
                     const imageContent = talk.image && talk.image.trim() !== '' 
-                        ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                        ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
                         : getInitials(talk.event);
                     
                     const imageDiv = `
@@ -334,7 +334,7 @@ async function loadTalks() {
             
             // Generate image content with fallback to initials
             const imageContent = talk.image && talk.image.trim() !== '' 
-                ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
                 : getInitials(talk.event);
             
             const imageDiv = `
@@ -589,7 +589,7 @@ async function loadTalks() {
                 });
                 // Generate modal thumbnail
                 const thumbContent = talk.image && talk.image.trim() !== '' 
-                    ? `<img src="${talk.image}" alt="${talk.event}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" />`
+                    ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
                     : getInitials(talk.event);
                 
                 const header = `

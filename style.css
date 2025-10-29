@@ -718,7 +718,7 @@ ul.talks {
 
 .upcoming-image {
   width: 200px;
-  height: 200px;
+  min-height: 150px;
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, #FF4500 0%, #FF6B35 50%, #FFA500 100%);
   display: flex;
@@ -729,6 +729,7 @@ ul.talks {
   color: white;
   box-shadow: var(--shadow-lg);
   border: 3px solid rgba(255, 255, 255, 0.3);
+  padding: var(--space-md);
 }
 
 .upcoming-details h3 {
@@ -758,7 +759,7 @@ ul.talks {
   .upcoming-image {
     margin: 0 auto;
     width: 150px;
-    height: 150px;
+    min-height: 150px;
     font-size: 3rem;
   }
 }
@@ -834,7 +835,7 @@ ul.talks {
 
 .talk-image {
   width: 100%;
-  aspect-ratio: 1;
+  min-height: 200px;
   max-width: 300px;
   border-radius: var(--radius-lg);
   display: flex;
@@ -847,6 +848,8 @@ ul.talks {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  background: var(--neutral-light);
+  padding: var(--space-md);
 }
 
 .talk-item.left .talk-image {
@@ -991,10 +994,10 @@ ul.talks {
 
 /* Modal inner layout */
 .modal-header{ display:flex; align-items:center; gap: var(--space-lg); margin-bottom: var(--space-lg); flex-wrap: wrap; }
-.modal-header .thumb{ width:96px; height:96px; border-radius: var(--radius-md); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1.5rem; box-shadow: var(--shadow-md); flex-shrink: 0; }
+.modal-header .thumb{ width:96px; min-height:96px; border-radius: var(--radius-md); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1.5rem; box-shadow: var(--shadow-md); flex-shrink: 0; padding: 0.5rem; background: var(--neutral-light); }
 @media (max-width: 640px) {
   .modal-header { gap: var(--space-md); }
-  .modal-header .thumb { width: 72px; height: 72px; font-size: 1.25rem; }
+  .modal-header .thumb { width: 72px; min-height: 72px; font-size: 1.25rem; }
 }
 .modal-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg) }
 @media (max-width: 800px){ .modal-grid{ grid-template-columns:1fr } }
