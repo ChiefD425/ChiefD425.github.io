@@ -113,10 +113,24 @@ function getInitials(name) {
     return name.split(' ').filter(word => word.length > 0).slice(0, 2).map(word => word[0].toUpperCase()).join('');
 }
 
+// Generate talk image path (uses explicit image or auto-detects from talkId)
+function getTalkImagePath(talk) {
+    // If image is explicitly set, use it
+    if (talk.image && talk.image.trim() !== '') {
+        return talk.image;
+    }
+    // Otherwise, auto-construct path from talkId
+    if (talk.talkId) {
+        return `/media/conferences/${talk.talkId}/logo.png`;
+    }
+    return null;
+}
+
 // Generate talk image (uses real image if available, otherwise initials)
 function getTalkImage(talk, index) {
-    if (talk.image && talk.image.trim() !== '') {
-        return `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`;
+    const imagePath = getTalkImagePath(talk);
+    if (imagePath) {
+        return `<img src="${imagePath}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.parentElement.innerHTML='${getInitials(talk.event).replace(/'/g, "\\'")}'; this.parentElement.style.background='${getTalkGradient(index)}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2rem'; this.parentElement.style.fontWeight='bold'; this.parentElement.style.color='white';" />`;
     }
     // Fallback to gradient + initials
     return `<div style="background: ${getTalkGradient(index)}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">${getInitials(talk.event)}</div>`;
@@ -155,8 +169,9 @@ async function loadTalks() {
                         card.className = 'upcoming-card fade-in';
                         
                         // Generate image content
-                        const imageContent = talk.image && talk.image.trim() !== '' 
-                            ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
+                        const imagePath = getTalkImagePath(talk);
+                        const imageContent = imagePath
+                            ? `<img src="${imagePath}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.parentElement.innerHTML='${getInitials(talk.event).replace(/'/g, "\\'")}'; this.parentElement.style.background='${getTalkGradient(index)}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2rem'; this.parentElement.style.fontWeight='bold'; this.parentElement.style.color='white';" />`
                             : getInitials(talk.event);
                         
                         card.innerHTML = `
@@ -221,13 +236,14 @@ async function loadTalks() {
                     item.dataset.talkId = talk.talkId || '';
 
                     // Generate image content with fallback to initials
-                    const imageContent = talk.image && talk.image.trim() !== '' 
-                        ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
+                    const imagePath = getTalkImagePath(talk);
+                    const imageContent = imagePath
+                        ? `<img src="${imagePath}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.parentElement.innerHTML='${getInitials(talk.event).replace(/'/g, "\\'")}'; this.parentElement.style.background='${getTalkGradient(index)}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2rem'; this.parentElement.style.fontWeight='bold'; this.parentElement.style.color='white';" />`
                         : getInitials(talk.event);
                     
                     const imageDiv = `
           <div class="talk-image" style="background: ${
-                        talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(index)
+                        imagePath ? 'transparent' : getTalkGradient(index)
                     }">
             ${imageContent}
           </div>
@@ -333,13 +349,14 @@ async function loadTalks() {
             item.dataset.talkId = talk.talkId || '';
             
             // Generate image content with fallback to initials
-            const imageContent = talk.image && talk.image.trim() !== '' 
-                ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
+            const imagePath = getTalkImagePath(talk);
+            const imageContent = imagePath
+                ? `<img src="${imagePath}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.parentElement.innerHTML='${getInitials(talk.event).replace(/'/g, "\\'")}'; this.parentElement.style.background='${getTalkGradient(index)}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2rem'; this.parentElement.style.fontWeight='bold'; this.parentElement.style.color='white';" />`
                 : getInitials(talk.event);
             
             const imageDiv = `
         <div class="talk-image" style="background: ${
-                talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(index)
+                imagePath ? 'transparent' : getTalkGradient(index)
             }">
           ${imageContent}
         </div>
@@ -588,14 +605,15 @@ async function loadTalks() {
                     year: 'numeric'
                 });
                 // Generate modal thumbnail
-                const thumbContent = talk.image && talk.image.trim() !== '' 
-                    ? `<img src="${talk.image}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" />`
+                const imagePath = getTalkImagePath(talk);
+                const thumbContent = imagePath
+                    ? `<img src="${imagePath}" alt="${talk.event}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.parentElement.innerHTML='${getInitials(talk.event).replace(/'/g, "\\'")}'; this.parentElement.style.background='${getTalkGradient(1)}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2rem'; this.parentElement.style.fontWeight='bold'; this.parentElement.style.color='white';" />`
                     : getInitials(talk.event);
                 
                 const header = `
     <div class="modal-header">
       <div class="thumb" style="background:${
-                    talk.image && talk.image.trim() !== '' ? 'transparent' : getTalkGradient(1)
+                    imagePath ? 'transparent' : getTalkGradient(1)
                 }">${thumbContent}</div>
       <div>
         <h2 style="margin:0">${

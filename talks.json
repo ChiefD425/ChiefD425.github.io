@@ -8,8 +8,7 @@
         "date": "2025-10-22",
         "category": "Leadership",
         "duration": "60 min",
-        "format": "Breakout Session",
-        "image": "/media/conferences/2025-badass-coaching-self-mastery/logo.png"
+        "format": "Breakout Session"
     },
     {
         "talkId": "2025-rsg-banff-chatgpt",
@@ -32,8 +31,7 @@
         "category": "AI",
         "duration": "45-60 min",
         "format": "Breakout Session",
-        "featured": true,
-        "image": "/media/conferences/2025-agile-devops-des-moines-chatgpt/logo.png"
+        "featured": true
     },
     {
         "talkId": "2025-osms-scrummaster-impact",
@@ -45,7 +43,7 @@
         "category": "Leadership",
         "duration": "45 min",
         "format": "Workshop"
-    }, {
+    },     {
         "talkId": "2025-kcdc-scrummaster-impact",
         "event": "Kansas City Developers Conference",
         "year": "2025",
@@ -65,8 +63,7 @@
         "category": "Technical",
         "duration": "45-60 min",
         "format": "Workshop",
-        "featured": true,
-        "image": ""
+        "featured": true
     },     {
         "talkId": "2024-scanagile-growth-wheel",
         "event": "ScanAgile",
@@ -77,8 +74,7 @@
         "category": "Leadership",
         "duration": "45 min",
         "format": "Breakout Session",
-        "featured": true,
-        "image": ""
+        "featured": true
     }, {
         "talkId": "2024-ali-predictable-delivery",
         "event": "Agile Lean Ireland",
