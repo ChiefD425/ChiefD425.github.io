@@ -3,12 +3,12 @@
         "talkId": "2025-badass-coaching-self-mastery",
         "event": "BadAss Agile Coaching Day",
         "year": "2025",
-        "title": "The Self-Mastery Journey: Investing in Yourself",
+        "title": "The Self-Mastery Journey: Learn, Engage, and Reflect",
         "link": "",
         "date": "2025-10-22",
         "category": "Leadership",
         "duration": "60 min",
-        "format": "Keynote, Workshop"
+        "format": "Breakout Session"
     },
     {
         "talkId": "2025-rsg-banff-chatgpt",
@@ -19,7 +19,7 @@
         "date": "2025-09-10",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Breakout Session"
     },
     {
         "talkId": "2025-agile-devops-des-moines-chatgpt",
@@ -30,7 +30,7 @@
         "date": "2025-10-02",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout",
+        "format": "Breakout Session",
         "featured": true,
         "image": "/media/conferences/2025-agile-devops-des-moines-chatgpt/logo.png"
     },
@@ -38,22 +38,22 @@
         "talkId": "2025-osms-scrummaster-impact",
         "event": "Online Scrum Master Summit",
         "year": "2025",
-        "title": "Improving Your Impact as a Scrum Master",
+        "title": "Amplifying Your Impact: Coaching with Triggers and Hooks",
         "link": "",
         "date": "2025-06-18",
         "category": "Leadership",
         "duration": "45 min",
-        "format": "Breakout"
+        "format": "Workshop"
     }, {
         "talkId": "2025-kcdc-scrummaster-impact",
         "event": "Kansas City Developers Conference",
         "year": "2025",
-        "title": "Improving Your Impact as a Scrum Master",
+        "title": "Amplifying Your Impact: Coaching with Triggers and Hooks",
         "link": "",
         "date": "2025-08-14",
         "category": "Leadership",
         "duration": "45 min",
-        "format": "Breakout"
+        "format": "Workshop"
     },     {
         "talkId": "2025-kcdc-predictable-delivery",
         "event": "Kansas City Developers Conference",
@@ -63,7 +63,7 @@
         "date": "2025-08-15",
         "category": "Technical",
         "duration": "45-60 min",
-        "format": "Keynote, Workshop, Breakout",
+        "format": "Workshop",
         "featured": true,
         "image": ""
     },     {
@@ -75,7 +75,7 @@
         "date": "2024-03-06",
         "category": "Leadership",
         "duration": "45 min",
-        "format": "Breakout",
+        "format": "Breakout Session",
         "featured": true,
         "image": ""
     }, {
@@ -87,7 +87,7 @@
         "date": "2024-10-02",
         "category": "Technical",
         "duration": "45-60 min",
-        "format": "Keynote, Workshop, Breakout"
+        "format": "Workshop"
     }, {
         "talkId": "2024-ai-agile-summit-masterless",
         "event": "AI & Agile Summit",
@@ -97,7 +97,7 @@
         "date": "2024-05-10",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2024-decompiled-masterless",
         "event": "DecompileD",
@@ -107,7 +107,7 @@
         "date": "2024-03-09",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2024-rsg-ghent-predictable",
         "event": "Regional Scrum Gathering Ghent",
@@ -117,7 +117,7 @@
         "date": "2024-06-05",
         "category": "Technical",
         "duration": "45-60 min",
-        "format": "Keynote, Workshop, Breakout"
+        "format": "Workshop"
     }, {
         "talkId": "2024-deliveryfest-predictable",
         "event": "DeliveryFest",
@@ -127,7 +127,7 @@
         "date": "2024-09-12",
         "category": "Technical",
         "duration": "45-60 min",
-        "format": "Keynote, Workshop, Breakout"
+        "format": "Workshop"
     }, {
         "talkId": "2023-agile-austria-jira-automations",
         "event": "Agile Austria",
@@ -137,7 +137,7 @@
         "date": "2023-05-10",
         "category": "Technical",
         "duration": "45 min",
-        "format": "Workshop, Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2023-scanagile-jira-automations",
         "event": "ScanAgile",
@@ -147,7 +147,7 @@
         "date": "2023-03-09",
         "category": "Technical",
         "duration": "45 min",
-        "format": "Workshop, Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2023-osms-working-agreements",
         "event": "Online Scrum Master Summit",
@@ -157,7 +157,7 @@
         "date": "2023-06-15",
         "category": "Transformation",
         "duration": "45 min",
-        "format": "Breakout"
+        "format": "Workshop"
     }, {
         "talkId": "2023-aos-growth-wheel",
         "event": "Agile Online Summit",
@@ -167,7 +167,7 @@
         "date": "2023-09-20",
         "category": "Leadership",
         "duration": "45 min",
-        "format": "Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2023-agile-testing-days-growth-wheel",
         "event": "Agile Testing Days Potsdam",
@@ -177,7 +177,7 @@
         "date": "2023-11-10",
         "category": "Leadership",
         "duration": "45 min",
-        "format": "Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2023-hdc-masterless-scrum",
         "event": "Heartland Developers Conference",
@@ -187,7 +187,7 @@
         "date": "2023-10-24",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Breakout Session"
     }, {
         "talkId": "2022-aos-jira-automations",
         "event": "Agile Online Summit",
@@ -197,7 +197,7 @@
         "date": "2022-09-15",
         "category": "Technical",
         "duration": "45 min",
-        "format": "Workshop, Breakout"
+        "format": "Breakout Session"
     },     {
         "talkId": "2025-ai_revolution-ai-agile-teams",
         "event": "AI Revolution 2025",
@@ -207,7 +207,7 @@
         "date": "2025-06-03",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Panel Discussion"
     },
     {
         "talkId": "2025-scrum-masters-universe-chatgpt",
@@ -218,6 +218,6 @@
         "date": "2025-09-05",
         "category": "AI",
         "duration": "45-60 min",
-        "format": "Keynote, Breakout"
+        "format": "Workshop"
     }
 ]
