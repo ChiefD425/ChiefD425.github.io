@@ -1,29 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Book — Fred Deichler</title>
-  <meta name="description" content="Coming soon: A practical guide to achieving predictable delivery through evidence-based Agile practices." />
-  <meta property="og:title" content="Book — Fred Deichler" />
-  <meta property="og:description" content="Coming soon: A practical guide to achieving predictable delivery through evidence-based Agile practices." />
-  <meta property="og:image" content="IMG_3523.png" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="site-header">
-  <a class="brand" href="index.html">Fred Deichler</a>
-  <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleNav()">☰</button>
-  <nav id="site-nav" class="site-nav">
-    <a href="speaking.html">Speaking</a>
-    <a href="about.html">About</a>
-    <a href="services.html">Work With Me</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+---
+layout: base.njk
+title: Book — Fred Deichler
+description: "Coming soon: A practical guide to achieving predictable delivery through evidence-based Agile practices."
+---
 
 <main id="main" class="container">
   <!-- Hero Section -->
@@ -88,7 +67,7 @@
       In the meantime, connect with me to stay in the loop.
     </p>
     <div class="buttons">
-      <a href="contact.html" class="btn primary">Get In Touch</a>
+      <a href="/contact/" class="btn primary">Get In Touch</a>
       <a href="https://www.linkedin.com/in/freddeichler/" target="_blank" rel="noopener" class="btn outline">Connect on LinkedIn</a>
     </div>
   </section>
@@ -100,19 +79,19 @@
       <div class="card fade-in">
         <h3>Conference Talks</h3>
         <p>Can't wait for the book? Watch recordings of my talks on predictable delivery, AI in teams, and Agile coaching practices.</p>
-        <a href="speaking.html" class="btn primary" style="margin-top: var(--space-md); display: inline-flex;">View Talks</a>
+        <a href="/speaking/" class="btn primary" style="margin-top: var(--space-md); display: inline-flex;">View Talks</a>
       </div>
       <div class="card fade-in">
         <h3>Coaching & Workshops</h3>
         <p>Work with me directly through 1:1 coaching, team workshops, or transformation consulting to implement these practices in your organization.</p>
-        <a href="services.html" class="btn primary" style="margin-top: var(--space-md); display: inline-flex;">Learn More</a>
+        <a href="/services/" class="btn primary" style="margin-top: var(--space-md); display: inline-flex;">Learn More</a>
       </div>
     </div>
   </section>
 
   <!-- Author Bio -->
   <section class="card fade-in" style="display: flex; gap: var(--space-xl); align-items: center; flex-wrap: wrap;">
-    <img src="IMG_3523.png" alt="Fred Deichler" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow-lg);">
+    <img src="/IMG_3523.png" alt="Fred Deichler" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow-lg);">
     <div style="flex: 1; min-width: 300px;">
       <h3>About the Author</h3>
       <p>
@@ -120,15 +99,7 @@
         He has delivered 40+ talks at conferences across Europe and North America, and currently serves as Senior Scrum Master 
         at Ascensus, where he launched the Kanban Center of Excellence.
       </p>
-      <a href="about.html" class="btn outline" style="margin-top: var(--space-sm); display: inline-flex;">Read Full Bio</a>
+      <a href="/about/" class="btn outline" style="margin-top: var(--space-sm); display: inline-flex;">Read Full Bio</a>
     </div>
   </section>
 </main>
-
-<footer class="site-footer">
-  <small>© <span id="year"></span> Fred Deichler</small>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-

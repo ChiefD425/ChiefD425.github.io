@@ -1,0 +1,23 @@
+{
+  "name": "chiefd425.github.io",
+  "version": "1.0.0",
+  "description": "A minimal, clean personal résumé and speaking website designed for GitHub Pages.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChiefD425/ChiefD425.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChiefD425/ChiefD425.github.io/issues"
+  },
+  "homepage": "https://github.com/ChiefD425/ChiefD425.github.io#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}

@@ -1,0 +1,71 @@
+---
+layout: base.njk
+title: Fred Deichler — Agile Coach | International Speaker
+description: Agile Coach with 13+ years experience coaching 50+ teams. Specializing in predictable delivery, flow metrics, and evidence-based management.
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <img src="IMG_3523.png" alt="Fred Deichler" class="avatar">
+    <h1>Fred Deichler</h1>
+    <p>Agile Coach | Agile Delivery Leader | International Speaker</p>
+    <p><strong>Helping teams achieve predictable delivery through evidence-based practices.</strong> 13+ years experience coaching 50+ teams with certifications including CSP-SM, RTE, and A-CSM.</p>
+    <div class="buttons">
+      <a class="btn primary" href="/speaking/">View Speaking</a>
+      <a class="btn outline" href="/contact/">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <!-- Recent Highlights Section -->
+  <section class="card fade-in" style="background: var(--gradient-subtle); border-left: 4px solid var(--orange);">
+    <h2>Recent Highlights</h2>
+    <div id="recent-highlights-grid" class="grid three">
+      {% set recentTalks = talks | sort(true, false, "date") | limit(3) %}
+      {% for talk in recentTalks %}
+        {% set isPast = talk.date | isPastDate %}
+        <div class="card" style="padding: var(--space-lg);">
+          <span class="badge">{% if isPast %}Recent{% else %}Upcoming{% endif %}</span>
+          <h3 style="font-size: 1.125rem; margin-top: var(--space-sm);">{{ talk.event }} {{ talk.year }}</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--space-xs);">{{ talk.title }}</p>
+          <small style="color: var(--text-secondary);">{{ talk.date | shortDate }}</small>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- How I Help Teams -->
+  <section class="grid two">
+    <div class="card fade-in">
+      <h2>How I Help Teams</h2>
+      <ul class="tight">
+        <li>Improve delivery predictability from 55% to 88%+ through evidence-based metrics</li>
+        <li>Reduce time-to-market with flow metrics and probabilistic forecasting</li>
+        <li>Build sustainable practices with modern Agile and Lean methodologies</li>
+        <li>Transform team effectiveness through AI integration and coaching</li>
+      </ul>
+    </div>
+    <div class="card fade-in">
+      <h2>Speaking Topics</h2>
+      <ul class="tight">
+        <li>Predictable Delivery with EBM, Monte Carlo, Flow</li>
+        <li>AI in Agile Teams</li>
+        <li>Coaching with Triggers & Hooks</li>
+        <li>Agile Transformation & Scaling</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card fade-in" id="home-testimonials">
+    <h2>What People Say</h2>
+    <div id="testimonials-grid" class="grid two">
+      {% for q in testimonials | limit(6) %}
+      <div class="quote">
+        <p style="margin:0 0 .5rem 0">“{{ q.quote }}”</p>
+        <small style="color:var(--text-secondary)">{{ q.event }}</small>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>

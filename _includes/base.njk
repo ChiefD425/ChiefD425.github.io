@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title | default("Fred Deichler — Agile Coach | International Speaker") }}</title>
+  <meta name="description" content="{{ description | default("Agile Coach with 13+ years experience coaching 50+ teams. Specializing in predictable delivery, flow metrics, and evidence-based management.") }}" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ title | default("Fred Deichler — Agile Coach | International Speaker") }}" />
+  <meta property="og:description" content="{{ description | default("Agile Coach with 13+ years experience coaching 50+ teams. Specializing in predictable delivery, flow metrics, and evidence-based management.") }}" />
+  <meta property="og:image" content="IMG_3523.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.freddeichler.com{{ page.url }}" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ title | default("Fred Deichler — Agile Coach | International Speaker") }}" />
+  <meta name="twitter:description" content="{{ description | default("Agile Coach with 13+ years experience coaching 50+ teams. Specializing in predictable delivery, flow metrics, and evidence-based management.") }}" />
+  <meta name="twitter:image" content="IMG_3523.png" />
+  
+  <link rel="preload" href="/style.css" as="style" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  
+  {% include "header.njk" %}
+
+  {{ content | safe }}
+
+  {% include "footer.njk" %}
+
+  <!-- Modal container for talk details (only if needed, but keeping global for simplicity) -->
+  <div id="talk-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" style="display:none">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" aria-label="Close" data-close="true">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>

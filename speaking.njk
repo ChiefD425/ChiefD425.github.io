@@ -1,0 +1,120 @@
+---
+layout: base.njk
+title: Speaking — Fred Deichler
+description: 40+ international conference talks on predictable delivery, AI in Agile teams, and coaching practices. Available for keynotes, workshops, and breakout sessions.
+---
+
+<main id="main" class="container">
+  <h1>Speaking</h1>
+  <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: var(--space-xl);">Conference talks, workshops, and presentations on Agile delivery, AI in teams, and coaching practices.</p>
+
+  <!-- Upcoming Talks Section -->
+  <section class="upcoming-section">
+    <h2 class="gradient-heading">Upcoming Talks</h2>
+    <div id="upcoming-talks">
+      {% set upcoming = talks | upcomingTalks %}
+      {% if upcoming.length == 0 %}
+        <p style="text-align: center; color: var(--text-secondary);">No upcoming talks scheduled at the moment. Check back soon!</p>
+      {% else %}
+        {% for talk in upcoming %}
+          <div class="upcoming-card fade-in">
+            <span class="upcoming-badge">🎤 UPCOMING</span>
+            <div class="upcoming-content">
+              <div class="upcoming-image">
+                {% set imagePath = talk | getTalkImagePath %}
+                {% if imagePath %}
+                  <img src="{{ imagePath }}" alt="{{ talk.event }}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div style="display:none; background: {{ loop.index0 | getTalkGradient }}; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">{{ talk.event | getInitials }}</div>
+                {% else %}
+                  <div style="background: {{ loop.index0 | getTalkGradient }}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">{{ talk.event | getInitials }}</div>
+                {% endif %}
+              </div>
+              <div class="upcoming-details">
+                <h3>{{ talk.event }} {{ talk.year }}</h3>
+                <h4>{{ talk.title }}</h4>
+                <p>{{ talk.date | postDate }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Featured Talks Section -->
+  <section class="featured-talks-section">
+    <h2 style="text-align: center; margin-bottom: var(--space-md);">Featured Talks</h2>
+    <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-xl);">Most requested sessions with proven impact</p>
+    <div id="featured-talks" class="grid two">
+      {% for talk in talks | featuredTalks %}
+        <div class="card fade-in" style="cursor: pointer;" onclick="openTalkModal({{ talk | dump }})">
+          <span class="category-badge">{{ talk.category | default('General') }}</span>
+          <h3 style="margin-top: var(--space-xs); margin-bottom: var(--space-sm);">{{ talk.title }}</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--space-xs);">
+            <strong>Duration:</strong> {{ talk.duration | default('45-60 min') }}<br>
+            <strong>Format:</strong> {{ talk.format | default('Keynote, Workshop, Breakout') }}
+          </p>
+          {% if talk.link %}
+            <a href="{{ talk.link }}" class="talk-link" onclick="event.stopPropagation()">View Recording →</a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Past Talks Timeline -->
+  <section class="past-talks-section">
+    <h2 style="text-align: center; margin-bottom: var(--space-md);">Past Talks & Presentations</h2>
+    
+    <!-- Category Filters -->
+    <div class="filter-buttons" style="text-align: center; margin-bottom: var(--space-xl);">
+      <button class="filter-btn active" data-category="all" onclick="filterTalks('all')">All</button>
+      <button class="filter-btn" data-category="Technical" onclick="filterTalks('Technical')">Technical</button>
+      <button class="filter-btn" data-category="Leadership" onclick="filterTalks('Leadership')">Leadership</button>
+      <button class="filter-btn" data-category="AI" onclick="filterTalks('AI')">AI</button>
+      <button class="filter-btn" data-category="Transformation" onclick="filterTalks('Transformation')">Transformation</button>
+    </div>
+    
+    <div class="timeline-container" id="past-talks">
+      <div class="timeline-line"></div>
+      {% set past = talks | pastTalks %}
+      {% for talk in past %}
+        {% set isLeft = loop.index0 % 2 == 0 %}
+        <div class="talk-item {{ 'left' if isLeft else 'right' }} fade-in" data-category="{{ talk.category }}" onclick="openTalkModal({{ talk | dump }})">
+          <div class="talk-image" style="background: {% if not (talk | getTalkImagePath) %}{{ loop.index0 | getTalkGradient }}{% else %}transparent{% endif %}">
+             {% set imagePath = talk | getTalkImagePath %}
+             {% if imagePath %}
+                <img src="{{ imagePath }}" alt="{{ talk.event }}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: inherit;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display:none; background: {{ loop.index0 | getTalkGradient }}; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">{{ talk.event | getInitials }}</div>
+             {% else %}
+                <div style="background: {{ loop.index0 | getTalkGradient }}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; border-radius: inherit;">{{ talk.event | getInitials }}</div>
+             {% endif %}
+          </div>
+          <div class="talk-content">
+            <span class="category-badge">{{ talk.category | default('General') }}</span>
+            <h3>{{ talk.event }}</h3>
+            <h4>{{ talk.title }}</h4>
+            <span class="talk-year">{{ talk.year }}</span>
+            {% if talk.link %}
+              <br><a href="{{ talk.link }}" class="talk-link" onclick="event.stopPropagation()">View Recording →</a>
+            {% endif %}
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Organizer Kit -->
+  <section class="card fade-in" style="background: var(--gradient-subtle); border-left: 4px solid var(--orange); margin-top: var(--space-2xl);">
+    <h2>📋 Organizer Kit</h2>
+    <p>Everything you need to promote and run the session successfully.</p>
+    <ul class="tight">
+      <li><a href="#">Speaker Bio (short/long)</a></li>
+      <li><a href="#">Professional Headshots</a></li>
+      <li><a href="#">Session Abstracts & Descriptions</a></li>
+      <li><a href="#">Intro/Outro Script</a></li>
+      <li><a href="#">Download Complete Kit (ZIP)</a></li>
+    </ul>
+  </section>
+</main>
