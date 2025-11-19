@@ -22,6 +22,12 @@ module.exports = function (eleventyConfig) {
             .join("");
     });
 
+    // First Name Only
+    eleventyConfig.addFilter("firstNameOnly", (name) => {
+        if (!name) return "";
+        return name.split(" ")[0];
+    });
+
     // Get Talk Gradient
     eleventyConfig.addFilter("getTalkGradient", (index) => {
         const gradients = [

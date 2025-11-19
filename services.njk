@@ -92,7 +92,7 @@ description: "1:1 coaching, team workshops, speaking engagements, and transforma
       {% for q in testimonials %}
         <div class="quote">
           <p style="margin:0 0 .5rem 0">"{{ q.quote }}"</p>
-          <small style="color:var(--text-secondary)">{{ q.author | default('Attendee') }}{% if q.event %} — {{ q.event }}{% endif %}</small>
+          <small style="color:var(--text-secondary)">{{ q.author | default('Attendee') | firstNameOnly }}{% if q.event %} — {{ q.event }}{% endif %}</small>
         </div>
       {% endfor %}
     </div>

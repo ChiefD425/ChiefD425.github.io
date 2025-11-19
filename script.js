@@ -3,6 +3,39 @@ function toggleNav() {
     document.getElementById('site-nav').classList.toggle('open');
 }
 
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
+
+// Check for saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    html.setAttribute('data-theme', savedTheme);
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        let newTheme = 'light';
+
+        if (currentTheme === 'light') {
+            newTheme = 'dark';
+        } else if (currentTheme === 'dark') {
+            newTheme = 'light';
+        } else {
+            // No manual theme set, check system preference
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                newTheme = 'light'; // System is dark, toggle to light
+            } else {
+                newTheme = 'dark'; // System is light, toggle to dark
+            }
+        }
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
 // Update copyright year
 const yearEl = document.getElementById('year');
 if (yearEl) {
