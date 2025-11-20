@@ -1,0 +1,481 @@
+---
+layout: base.njk
+title: Monte Carlo Simulation Calculator
+description: Predict your team's future performance with confidence using our Monte Carlo Simulation Calculator.
+---
+
+<main id="main" class="container">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md);">
+    <h1 style="margin-bottom: 0; font-size: 2rem;">Monte Carlo Calculator</h1>
+    <p style="color: var(--text-secondary); margin-bottom: 0;">Forecast with confidence.</p>
+  </div>
+
+  <div class="grid two" style="align-items: start; gap: var(--space-lg);">
+    <!-- Input Section -->
+    <section class="calculator-section">
+      <div class="card glass" style="padding: var(--space-lg);">
+        
+        <form id="mc-form" onsubmit="return false;">
+          
+          <!-- Top Row: Mode Toggle & Unit Selection -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); padding-bottom: var(--space-sm); border-bottom: 1px solid rgba(0,0,0,0.1);">
+            
+            <!-- Mode Toggle -->
+            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+              <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-secondary);">How Many</span>
+              <label class="switch">
+                <input type="checkbox" id="mode-toggle" onchange="toggleMode()">
+                <span class="slider round"></span>
+              </label>
+              <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);">When</span>
+            </div>
+
+            <!-- Unit Segmented Control -->
+            <div class="segmented-control">
+              <input type="radio" name="unit" value="Points" id="unit-points" checked onchange="updateUnitLabel()">
+              <label for="unit-points">Points</label>
+              <input type="radio" name="unit" value="Stories" id="unit-stories" onchange="updateUnitLabel()">
+              <label for="unit-stories">Stories</label>
+            </div>
+          </div>
+
+          <p id="mode-explainer" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md); margin-top: -0.5rem; background: rgba(0,0,0,0.03); padding: 0.5rem; border-radius: var(--radius-sm);">
+            <strong>Capacity Planning:</strong> Forecast how many items can be delivered in the next sprint.
+          </p>
+
+          <!-- When Mode Inputs (Single Row) -->
+          <div id="when-inputs" style="display: none; margin-bottom: var(--space-md);">
+             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-sm);">
+                <div>
+                    <label for="remaining-work" class="compact-label">Remaining</label>
+                    <input type="number" id="remaining-work" class="history-input compact-input" placeholder="#" min="1">
+                </div>
+                <div>
+                    <label for="sprint-length" class="compact-label">Sprint Length</label>
+                    <select id="sprint-length" class="history-input compact-input">
+                        <option value="1">1 Week</option>
+                        <option value="2" selected>2 Weeks</option>
+                        <option value="3">3 Weeks</option>
+                        <option value="4">4 Weeks</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="start-date" class="compact-label">Start Date</label>
+                    <input type="date" id="start-date" class="history-input compact-input" style="padding-right: 0;">
+                </div>
+             </div>
+          </div>
+
+          <!-- Historical Data Inputs -->
+          <div class="form-group" style="margin-bottom: var(--space-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xs);">
+                <label style="font-weight:600; color:var(--text-primary);">Historical Data (Last 10 Sprints)</label>
+                <span id="reminder-text" style="font-size: 0.8rem; color: var(--orange);">Min 3 sprints required</span>
+            </div>
+            
+            <!-- 5-column grid for inputs -->
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-xs);">
+              <input type="number" class="history-input" placeholder="Sprint 1" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 2" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 3" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 4" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 5" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 6" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 7" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 8" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 9" min="0" oninput="checkInput()">
+              <input type="number" class="history-input" placeholder="Sprint 10" min="0" oninput="checkInput()">
+            </div>
+            <div id="error-msg" style="color: #ef4444; font-size: 0.8rem; margin-top: var(--space-xs); display: none;">Please enter at least 3 data points.</div>
+          </div>
+
+          <button type="button" class="btn primary" onclick="runSimulation()" style="width: 100%; padding: 0.75rem;">Calculate Forecast</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results-area" class="card glass" style="padding: var(--space-lg);">
+      <h2 style="font-size: 1.5rem; margin-bottom: var(--space-xs);">Forecast Results</h2>
+      <p id="results-subtitle" style="font-size: 0.9rem; margin-bottom: var(--space-md);">Based on 10,000 simulations</p>
+      
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="text-align: left; border-bottom: 2px solid rgba(0,0,0,0.1);">
+              <th style="padding: var(--space-xs) var(--space-sm); color: var(--text-primary); font-size: 0.9rem;">Confidence</th>
+              <th style="padding: var(--space-xs) var(--space-sm); color: var(--text-primary); font-size: 0.9rem;">Estimated <span id="unit-label">Points</span></th>
+              <th style="padding: var(--space-xs) var(--space-sm); color: var(--text-primary); font-size: 0.9rem;">Likelihood</th>
+            </tr>
+          </thead>
+          <tbody id="results-body">
+            <!-- Default / Empty State -->
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <td style="padding: var(--space-sm);">50% (High Risk)</td>
+              <td style="padding: var(--space-sm); font-weight:bold;" class="result-val">-</td>
+              <td style="padding: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem;">Coin flip chance</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <td style="padding: var(--space-sm);">75% (Moderate)</td>
+              <td style="padding: var(--space-sm); font-weight:bold;" class="result-val">-</td>
+              <td style="padding: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem;">Stretch goal</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <td style="padding: var(--space-sm);">85% (Recommended)</td>
+              <td style="padding: var(--space-sm); font-weight:bold; color: var(--orange);" class="result-val">-</td>
+              <td style="padding: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem;">Standard commitment</td>
+            </tr>
+            <tr>
+              <td style="padding: var(--space-sm);">95% (Safe)</td>
+              <td style="padding: var(--space-sm); font-weight:bold;" class="result-val">-</td>
+              <td style="padding: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem;">Almost certain</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<style>
+  /* Compact Inputs */
+  .history-input {
+    padding: 0.5rem 0.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.1);
+    width: 100%;
+    background: rgba(255,255,255,0.9);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  
+  .compact-label {
+    display: block; 
+    margin-bottom: 0.25rem; 
+    font-weight: 600; 
+    font-size: 0.8rem; 
+    color: var(--text-primary);
+  }
+  
+  .compact-input {
+    text-align: left;
+  }
+
+  /* Toggle Switch */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+  }
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+  }
+  input:checked + .slider {
+    background-color: var(--orange);
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px var(--orange);
+  }
+  input:checked + .slider:before {
+    transform: translateX(16px);
+  }
+  .slider.round {
+    border-radius: 34px;
+  }
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  /* Segmented Control */
+  .segmented-control {
+    display: flex;
+    background: rgba(0,0,0,0.05);
+    padding: 2px;
+    border-radius: var(--radius-sm);
+  }
+  .segmented-control input {
+    display: none;
+  }
+  .segmented-control label {
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+  .segmented-control input:checked + label {
+    background: white;
+    color: var(--orange);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .history-input {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: white;
+    }
+    :root:not([data-theme="light"]) .segmented-control {
+        background: rgba(255,255,255,0.1);
+    }
+    :root:not([data-theme="light"]) .segmented-control input:checked + label {
+        background: var(--blue-dark);
+        color: white;
+    }
+    :root:not([data-theme="light"]) th {
+      border-bottom-color: rgba(255,255,255,0.2);
+    }
+  }
+  
+  [data-theme="dark"] .history-input {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+  }
+  [data-theme="dark"] .segmented-control {
+    background: rgba(255,255,255,0.1);
+  }
+  [data-theme="dark"] .segmented-control input:checked + label {
+    background: var(--blue-dark);
+    color: white;
+  }
+  [data-theme="dark"] th {
+    border-bottom-color: rgba(255,255,255,0.2);
+  }
+</style>
+
+<script>
+  // Initialize default date
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('start-date').value = `${yyyy}-${mm}-${dd}`;
+  });
+
+  function updateUnitLabel() {
+     const unit = document.querySelector('input[name="unit"]:checked').value;
+     const mode = document.getElementById('mode-toggle').checked ? 'when' : 'howMany';
+     if (mode === 'howMany') {
+        document.getElementById('unit-label').textContent = unit;
+     }
+  }
+
+  function toggleMode() {
+    const isWhen = document.getElementById('mode-toggle').checked;
+    const whenInputs = document.getElementById('when-inputs');
+    const explainer = document.getElementById('mode-explainer');
+    const unitLabel = document.getElementById('unit-label');
+    
+    if (isWhen) {
+        whenInputs.style.display = 'block';
+        explainer.innerHTML = "<strong>Release Planning:</strong> Forecast the completion date for a specific backlog of items.";
+        unitLabel.textContent = "Completion Date";
+    } else {
+        whenInputs.style.display = 'none';
+        explainer.innerHTML = "<strong>Capacity Planning:</strong> Forecast how many items can be delivered in the next sprint.";
+        const unit = document.querySelector('input[name="unit"]:checked').value;
+        unitLabel.textContent = unit;
+    }
+    
+    // Reset results
+    document.querySelectorAll('.result-val').forEach(el => el.textContent = '-');
+  }
+
+  function checkInput() {
+    const inputs = document.querySelectorAll('.history-input[placeholder]');
+    let hasInput = false;
+    inputs.forEach(input => {
+      if (input.value !== '') {
+        hasInput = true;
+      }
+    });
+    
+    const reminder = document.getElementById('reminder-text');
+    if (hasInput) {
+      reminder.style.display = 'none';
+    } else {
+      reminder.style.display = 'inline';
+    }
+  }
+
+  function runSimulation() {
+    // 1. Gather History
+    // Select only the historical inputs (those with placeholder starting with "Sprint")
+    const inputs = Array.from(document.querySelectorAll('.history-input')).filter(el => el.placeholder && el.placeholder.startsWith('Sprint'));
+    const history = [];
+    inputs.forEach(input => {
+      if (input.value !== '' && !isNaN(input.value)) {
+        history.push(Number(input.value));
+      }
+    });
+
+    const errorMsg = document.getElementById('error-msg');
+    
+    // 2. Validation
+    if (history.length < 3) {
+      errorMsg.style.display = 'block';
+      return;
+    } else {
+      errorMsg.style.display = 'none';
+    }
+
+    const isWhen = document.getElementById('mode-toggle').checked;
+    const unit = document.querySelector('input[name="unit"]:checked').value;
+    
+    if (!isWhen) {
+        runHowMany(history, unit);
+    } else {
+        runWhen(history);
+    }
+  }
+
+  function runHowMany(history, unit) {
+    document.getElementById('unit-label').textContent = unit;
+    document.getElementById('results-subtitle').textContent = "Based on 10,000 simulations for the next sprint";
+
+    const SIMULATIONS = 10000;
+    const results = [];
+
+    for (let i = 0; i < SIMULATIONS; i++) {
+      const randomIndex = Math.floor(Math.random() * history.length);
+      results.push(history[randomIndex]);
+    }
+
+    results.sort((a, b) => a - b);
+
+    function getPercentile(p) {
+      const index = Math.floor(results.length * (p / 100));
+      return results[index];
+    }
+
+    const p50 = getPercentile(50);
+    const p75 = getPercentile(25); 
+    const p85 = getPercentile(15);
+    const p95 = getPercentile(5);
+
+    renderResults(p50, p75, p85, p95);
+  }
+
+  function runWhen(history) {
+    const remaining = parseInt(document.getElementById('remaining-work').value);
+    if (!remaining || remaining <= 0) {
+        alert("Please enter a valid amount of Remaining Work.");
+        return;
+    }
+
+    const sprintLengthWeeks = parseInt(document.getElementById('sprint-length').value);
+    const startDateStr = document.getElementById('start-date').value;
+    const startDate = new Date(startDateStr);
+
+    document.getElementById('unit-label').textContent = "Completion Date";
+    document.getElementById('results-subtitle').textContent = `Based on 10,000 simulations for ${remaining} items`;
+
+    const SIMULATIONS = 10000;
+    const results = []; // Will store number of sprints
+
+    for (let i = 0; i < SIMULATIONS; i++) {
+        let workDone = 0;
+        let sprints = 0;
+        while (workDone < remaining) {
+            const randomIndex = Math.floor(Math.random() * history.length);
+            const velocity = history[randomIndex];
+            
+            // Prevent infinite loop if 0 velocity is in history
+            if (velocity <= 0) {
+                sprints++;
+                continue;
+            }
+
+            if (workDone + velocity >= remaining) {
+                // Calculate fractional sprint for the last leg
+                const fraction = (remaining - workDone) / velocity;
+                sprints += fraction;
+                workDone = remaining;
+            } else {
+                sprints++;
+                workDone += velocity;
+            }
+        }
+        results.push(sprints);
+    }
+
+    results.sort((a, b) => a - b);
+
+    function getPercentile(p) {
+      const index = Math.floor(results.length * (p / 100));
+      return results[index];
+    }
+
+    const s50 = getPercentile(50);
+    const s75 = getPercentile(75);
+    const s85 = getPercentile(85);
+    const s95 = getPercentile(95);
+
+    function formatDate(sprints) {
+        // Use ceiling to get the end date of the sprint that contains this fractional value
+        const daysToAdd = Math.ceil(sprints) * sprintLengthWeeks * 7;
+        const resultDate = new Date(startDate);
+        resultDate.setDate(resultDate.getDate() + daysToAdd);
+        return resultDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    renderResults(
+        `${formatDate(s50)} (${s50.toFixed(1)} sprints)`,
+        `${formatDate(s75)} (${s75.toFixed(1)} sprints)`,
+        `${formatDate(s85)} (${s85.toFixed(1)} sprints)`,
+        `${formatDate(s95)} (${s95.toFixed(1)} sprints)`
+    );
+  }
+
+  function renderResults(p50, p75, p85, p95) {
+    const tbody = document.getElementById('results-body');
+    tbody.innerHTML = `
+      <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <td style="padding: var(--space-sm);">50% (High Risk)</td>
+        <td style="padding: var(--space-sm); font-weight:bold;">${p50}</td>
+        <td style="padding: var(--space-sm); color: var(--text-secondary);">Coin flip chance</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <td style="padding: var(--space-sm);">75% (Moderate)</td>
+        <td style="padding: var(--space-sm); font-weight:bold;">${p75}</td>
+        <td style="padding: var(--space-sm); color: var(--text-secondary);">Stretch goal</td>
+      </tr>
+      <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+        <td style="padding: var(--space-sm);">85% (Recommended)</td>
+        <td style="padding: var(--space-sm); font-weight:bold; color: var(--orange);">${p85}</td>
+        <td style="padding: var(--space-sm); color: var(--text-secondary);">Standard commitment</td>
+      </tr>
+      <tr>
+        <td style="padding: var(--space-sm);">95% (Safe)</td>
+        <td style="padding: var(--space-sm); font-weight:bold;">${p95}</td>
+        <td style="padding: var(--space-sm); color: var(--text-secondary);">Almost certain</td>
+      </tr>
+    `;
+  }
+</script>
+
