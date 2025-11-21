@@ -1,26 +1,57 @@
 ---
 layout: base.njk
-title: About — Fred Deichler
+title: About — Triforce Agility
 description: Learn about Fred Deichler's journey from software development manager to international Agile coach and speaker, with 13+ years coaching 50+ teams.
+certifications:
+  - acronym: CSP-SM
+    name: Certified Scrum Professional - Scrum Master
+    org: Scrum Alliance
+  - acronym: A-CSM
+    name: Advanced Certified Scrum Master
+    org: Scrum Alliance
+  - acronym: CSM
+    name: Certified Scrum Master
+    org: Scrum Alliance
+  - acronym: CASP
+    name: Certified Agile Skills - Scaling
+    org: Scrum Alliance
+  - acronym: RTE
+    name: Release Train Engineer
+    org: Scaled Agile
+  - acronym: CAF
+    name: Certified Agile Facilitator
+    org: Scrum Alliance
+  - acronym: CPPM
+    name: Certified Professional Project Manager
+    org: University of St. Thomas
+  - acronym: CI Practitioner
+    name: Continuous Improvement
+    org: Management & Strategy Institute
+  - acronym: TBR Certified
+    name: Training from the Back of the Room
+    org: Bowperson Publishing
+  - acronym: AWS
+    name: Cloud Practitioner
+    org: Amazon Web Services
 ---
 
 <main id="main" class="container">
-  <h1>About Fred</h1>
+  <h1>About Triforce Agility</h1>
   
   <!-- Personal Story -->
   <section class="card fade-in" style="text-align: center;">
     <img src="/IMG_3523.png" alt="Fred Deichler" style="width: 200px; height: 200px; border-radius: 50%; margin: 0 auto var(--space-lg); object-fit: cover; box-shadow: var(--shadow-lg);">
-    <h2>From Developer to Coach to International Speaker</h2>
+    <h2>From Technician to Coach to International Speaker</h2>
     <p style="font-size: 1.125rem; max-width: 800px; margin: 0 auto;">
-      My journey in Agile started in 2012 when I realized that the best software comes not just from technical excellence, 
-      but from how teams work together. Since then, I've dedicated my career to helping teams achieve predictable delivery 
-      through evidence-based practices, coaching 50+ teams across multiple industries.
+      Triforce Agility was born from a simple realization: the best software comes not just from technical excellence, 
+      but from how teams work together. Founded by Fred Deichler, we are dedicated to helping teams achieve predictable delivery 
+      through evidence-based practices, drawing on experience coaching 50+ teams across multiple industries.
     </p>
   </section>
 
   <!-- My Story -->
   <section class="card fade-in">
-    <h2>My Story</h2>
+    <h2>The Founder's Story</h2>
     <p>
       I began my career as a Software Development Manager at The Nerdery, where I first discovered the power of Agile methodologies. 
       What started as implementing Scrum and Kanban to improve team productivity quickly evolved into a passion for understanding 
@@ -33,7 +64,7 @@ description: Learn about Fred Deichler's journey from software development manag
       where I help organizations align these elements using data and real-world outcomes.
     </p>
     <p>
-      Today, I'm a Senior Scrum Master at Ascensus, where I launched a Kanban Center of Excellence and continue to drive measurable 
+      Today, I'm a Senior Scrum Master at a large fintech organization, where I launched a Kanban Center of Excellence and continue to drive measurable 
       improvements in team effectiveness. I'm also privileged to share these learnings on international stages, having spoken at 
       40+ conferences across Europe, North America, and beyond.
     </p>
@@ -41,7 +72,7 @@ description: Learn about Fred Deichler's journey from software development manag
 
   <!-- Career Timeline -->
   <section class="fade-in">
-    <h2 style="text-align: center; margin-bottom: var(--space-xl);">Career Journey</h2>
+    <h2 style="text-align: center; margin-bottom: var(--space-xl);">Experience & Expertise</h2>
     <ul class="resume-list">
       <li>
         <h3>2012: The Beginning</h3>
@@ -65,8 +96,8 @@ description: Learn about Fred Deichler's journey from software development manag
       </li>
       <li>
         <h3>2023-Present: Senior Leadership & Education</h3>
-        <em>Ascensus & Madecraft</em>
-        <p>Currently serving as Senior Scrum Master at Ascensus, where I launched the Kanban Center of Excellence. Also working as Course Author for Madecraft, developing educational content on Agile leadership and transformation consulting for global distribution.</p>
+        <em>Large Fintech Organization & Madecraft</em>
+        <p>Currently serving as Senior Scrum Master at a large fintech organization, where I launched the Kanban Center of Excellence. Also working as Course Author for Madecraft, developing educational content on Agile leadership and transformation consulting for global distribution.</p>
       </li>
     </ul>
   </section>
@@ -75,16 +106,14 @@ description: Learn about Fred Deichler's journey from software development manag
   <section class="card fade-in">
     <h2>Certifications & Credentials</h2>
     <p style="margin-bottom: var(--space-lg);">Continuous learning is core to my practice. I maintain multiple professional certifications to stay at the forefront of Agile methodologies and practices.</p>
-    <div style="margin-top: var(--space-md);">
-      <span class="badge">CSP-SM (Certified Scrum Professional - Scrum Master)</span>
-      <span class="badge">A-CSM (Advanced Certified Scrum Master)</span>
-      <span class="badge">CSM (Certified Scrum Master)</span>
-      <span class="badge">CASP (Certified Agile Skills - Scaling)</span>
-      <span class="badge">RTE (Release Train Engineer)</span>
-      <span class="badge">CI Practitioner (Continuous Improvement)</span>
-      <span class="badge">TBR Certified (Team Building & Resilience)</span>
-      <span class="badge">AWS Cloud Practitioner</span>
-      <span class="badge">Project Manager</span>
+    <div class="cert-grid">
+      {% for cert in certifications %}
+      <div class="cert-card">
+        <div class="cert-acronym">{{ cert.acronym }}</div>
+        <div class="cert-name">{{ cert.name }}</div>
+        <div class="cert-org">{{ cert.org }}</div>
+      </div>
+      {% endfor %}
     </div>
   </section>
 
