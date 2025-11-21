@@ -8,6 +8,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy("IMG_3523.png");
     eleventyConfig.addPassthroughCopy("feedback");
     eleventyConfig.addPassthroughCopy("CNAME"); // If it exists
+    eleventyConfig.addPassthroughCopy("favicon.png");
 
     // --- Filters ---
 
